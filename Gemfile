@@ -17,6 +17,7 @@ gem 'jquery-rails', '~> 4.3' # Use jQuery as the JavaScript library
 gem 'kaminari', '~> 0.17' # Use Kaminari for pagination
 gem 'pg', '~> 0.21' # Use PostgreSQL as the database for Active Record
 gem 'puma', '~> 3.10' # Use Puma as the app server
+gem 'money-rails', '~> 1' # Use money-rails to manage money
 gem 'rack-timeout', '~> 0.4' # Use Rack Timeout. Read more: https://github.com/heroku/rack-timeout
 gem 'rails', '~> 5.1.3'
 gem 'sass-rails', '~> 5.0' # Use SCSS for stylesheets
