@@ -10,7 +10,6 @@ require 'rspec/rails'
 # Add additional requires below this line. Rails is not loaded until this point!
 require 'support/database_cleaner'
 require 'support/factory_girl'
-require 'support/shoulda_matchers'
 require 'support/json_helper'
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
