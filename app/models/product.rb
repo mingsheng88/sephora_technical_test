@@ -20,4 +20,10 @@ class Product < ApplicationRecord
     end
   }
   scope :in_categories, ->(*category_names) { in_category(*category_names) }
+  scope :price_range, ->(from: nil, to: nil) {
+    query = all
+    query = query.where('products.price_cents >= ?', from * 100) if from
+    query = query.where('products.price_cents <= ?', to * 100) if to
+    query
+  }
 end

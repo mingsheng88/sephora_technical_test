@@ -1,7 +1,7 @@
 describe Product, type: :model do
   context 'scopes' do
     describe 'in_category' do
-      it 'scopes out products in the correct category given 1 category' do
+      it 'finds products given 1 category' do
         product = create(:product, categories: ['cat_one', 'cat_two'])
         uncategorized_product = create(:product, categories: [])
 
@@ -15,7 +15,7 @@ describe Product, type: :model do
         expect(described_class.in_category('not_found')).not_to include(uncategorized_product)
       end
 
-      it 'scopes out products in the correct category given 2 categories' do
+      it 'finds products given >1 categories' do
         product = create(:product, categories: ['cat_one', 'cat_two'])
         product_two = create(:product, categories: ['cat_one', 'cat_three'])
         product_three = create(:product, categories: ['cat_one', 'cat_two', 'cat_three'])
@@ -27,7 +27,7 @@ describe Product, type: :model do
         expect(search_result).to include(product_three)
       end
 
-      it 'returns everything if empty string is provided' do
+      it 'finds all given empty string' do
         product = create(:product, categories: ['cat_one', 'cat_two'])
         uncategorized_product = create(:product, categories: [])
 
@@ -53,6 +53,51 @@ describe Product, type: :model do
         expect(described_class).to receive(:in_category).with(input)
 
         described_class.in_categories(input)
+      end
+    end
+
+    describe 'price_range' do
+      it 'finds all products in range given from and to' do
+        product = create(:product, price: 1)
+        product_two = create(:product, price: 2)
+        product_three = create(:product, price: 3)
+
+        search_result = described_class.price_range(from: 2, to: 3)
+
+        expect(search_result).not_to include(product)
+        expect(search_result).to include(product_two, product_three)
+      end
+
+      it 'finds all products given from' do
+        product = create(:product, price: 1)
+        product_two = create(:product, price: 2)
+        product_three = create(:product, price: 3)
+
+        search_result = described_class.price_range(from: 2)
+
+        expect(search_result).not_to include(product)
+        expect(search_result).to include(product_two, product_three)
+      end
+
+      it 'finds all products given to' do
+        product = create(:product, price: 1)
+        product_two = create(:product, price: 2)
+        product_three = create(:product, price: 3)
+
+        search_result = described_class.price_range(to: 2)
+
+        expect(search_result).to include(product, product_two)
+        expect(search_result).not_to include(product_three)
+      end
+
+      it 'finds all products by default' do
+        product = create(:product, price: 1)
+        product_two = create(:product, price: 2)
+        product_three = create(:product, price: 3)
+
+        search_result = described_class.price_range
+
+        expect(search_result).to include(product, product_two, product_three)
       end
     end
   end
