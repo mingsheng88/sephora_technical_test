@@ -18,7 +18,9 @@ module SephoraTechnicalTest
     # -- all .rb files in that directory are automatically loaded.
 
     # Autoload
-    autoload_paths = %w()
+    autoload_paths = %w(
+      app/resources
+    )
 
     autoload_paths.each do |autoload_path|
       config.autoload_paths << Rails.root.join(autoload_path)
