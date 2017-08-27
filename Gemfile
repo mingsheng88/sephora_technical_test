@@ -12,7 +12,8 @@ gem 'awesome_print' # Make console more user friendly
 gem 'bootstrap-sass', '~> 3.3' # Use Bootstrap SASS for Bootstrap support
 gem 'font-awesome-rails', '~> 4.7' # Use Font Awesome Rails for Font Awesome icons
 gem 'jbuilder', '~> 2.5' # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'jsonapi-resources'
+gem 'jsonapi-resources', '~> 0.9'
+gem 'jsonapi-resources-matchers', '~> 1.0.0'
 gem 'jquery-rails', '~> 4.3' # Use jQuery as the JavaScript library
 gem 'kaminari', '~> 0.17' # Use Kaminari for pagination
 gem 'pg', '~> 0.21' # Use PostgreSQL as the database for Active Record
