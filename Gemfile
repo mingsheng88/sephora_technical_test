@@ -8,11 +8,11 @@ end
 # gem 'clockwork', '~> 2.0' # Use Clockwork for recurring background tasks without needing cron
 # gem 'redis-rails', '~> 5.0' # Use Redis Rails to set up a Redis backed Cache and / or Session
 # gem 'sidekiq', '~> 5.0' # Use Sidekiq as a background job processor through Active Job
-gem 'active_model_serializers', '~> 0.10.0'
 gem 'awesome_print' # Make console more user friendly
 gem 'bootstrap-sass', '~> 3.3' # Use Bootstrap SASS for Bootstrap support
 gem 'font-awesome-rails', '~> 4.7' # Use Font Awesome Rails for Font Awesome icons
 gem 'jbuilder', '~> 2.5' # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
+gem 'jsonapi-resources'
 gem 'jquery-rails', '~> 4.3' # Use jQuery as the JavaScript library
 gem 'kaminari', '~> 0.17' # Use Kaminari for pagination
 gem 'pg', '~> 0.21' # Use PostgreSQL as the database for Active Record
