@@ -3,6 +3,7 @@
     <ul>
       <li class='product' v-for='product in products'>
         <img src='http://via.placeholder.com/225x225' />
+        <div class='brand_name'>{{ product.attributes['brand-name'] }}</div>
         <div class='name'>{{ product.attributes.name }}</div>
         <div class='price'>{{ product.attributes.price }}</div>
         <div class='categories'>{{ product.attributes.categories }}</div>
@@ -36,14 +37,17 @@
     float: left;
   }
 
-  .name {
+  .brand_name {
     font-weight: 600;
     font-size: 13px;
     margin-top: 2px;
   }
 
-  .price {
+  .name {
     font-family: "Avalon", CenturyGothic, Helvetica, Arial;
+  }
+
+  .price {
     font-weight: 600;
   }
 </style>
