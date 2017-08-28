@@ -20,3 +20,5 @@
 /vendor/bundle
 /public/assets/*
 .env
+/public/packs
+/node_modules

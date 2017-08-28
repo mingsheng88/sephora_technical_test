@@ -24,7 +24,7 @@ gem 'rails', '~> 5.1.3'
 gem 'sass-rails', '~> 5.0' # Use SCSS for stylesheets
 gem 'turbolinks', '~> 5' # Use Turbolinks. Read more: https://github.com/turbolinks/turbolinks
 gem 'uglifier', '>= 1.3.0' # Use Uglifier as the compressor for JavaScript assets
-
+gem 'webpacker', '~> 2.0'
 
 group :development, :test do
   # End to end testing of your rails apps (Rails 5.1+ supports this)
