@@ -1,6 +1,6 @@
 # Bind on a specific TCP address. We won't bother using unix sockets because
 # nginx will be running in a different Docker container.
-bind "tcp://#{ENV['BIND_ON'] || '0.0.0.0:3000' }"
+bind "tcp://#{ENV.fetch('BIND_ON') { '0.0.0.0:3000' }}"
 
 # Puma supports threading. Requests are served through an internal thread pool.
 # Even on MRI, it is beneficial to leverage multiple threads because I/O
@@ -30,7 +30,10 @@ threads threads_count, threads_count
 #
 # If using threads and workers together, the concurrency of your application
 # will be THREADS * WORKERS.
-workers ENV.fetch('WEB_CONCURRENCY') { 2 }
+workers(
+  Rails.env.development? ?
+  ENV.fetch('WEB_CONCURRENCY_DEV') { 0 } :
+  ENV.fetch('WEB_CONCURRENCY') { 2 })
 
 # An internal health check to verify that workers have checked in to the master
 # process within a specific time frame. If this time is exceeded, the worker
