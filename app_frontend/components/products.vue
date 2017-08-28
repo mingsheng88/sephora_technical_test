@@ -1,9 +1,11 @@
 <template>
   <div>
     <ul>
-      <li v-for='product in products'>
-        {{ product.attributes.price }}
-        {{ product.attributes.categories }}
+      <li class='product' v-for='product in products'>
+        <img src='http://via.placeholder.com/225x225' />
+        <div class='name'>{{ product.attributes.name }}</div>
+        <div class='price'>{{ product.attributes.price }}</div>
+        <div class='categories'>{{ product.attributes.categories }}</div>
       </li>
     </ul>
   </div>
@@ -26,8 +28,22 @@
 </script>
 
 <style scoped>
-  ul {
-    text-align: center;
-    font-size: 3em;
+  .product {
+    list-style-image: none;
+    list-style-position: outside;
+    list-style-type: none;
+    margin: 10px 5%;
+    float: left;
+  }
+
+  .name {
+    font-weight: 600;
+    font-size: 13px;
+    margin-top: 2px;
+  }
+
+  .price {
+    font-family: "Avalon", CenturyGothic, Helvetica, Arial;
+    font-weight: 600;
   }
 </style>

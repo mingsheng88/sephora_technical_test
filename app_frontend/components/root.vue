@@ -16,4 +16,8 @@
 </script>
 
 <style scoped>
+  * {
+    font-family: Ubuntu, Arial, sans-serif;
+    letter-spacing: 0.02em;
+  }
 </style>
