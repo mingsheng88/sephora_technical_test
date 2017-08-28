@@ -5,6 +5,9 @@ default: &default
   source_entry_path: packs
   public_output_path: packs
 
+  # For addition of more paths
+  resolved_paths: []
+
   extensions:
     - .coffee
     - .erb
@@ -23,6 +26,7 @@ default: &default
 
 development:
   <<: *default
+  compile: true
 
   dev_server:
     host: 0.0.0.0

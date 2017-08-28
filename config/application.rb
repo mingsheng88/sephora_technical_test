@@ -20,6 +20,7 @@ module SephoraTechnicalTest
     # Autoload
     autoload_paths = %w(
       app/resources
+      app_frontend
     )
 
     autoload_paths.each do |autoload_path|
