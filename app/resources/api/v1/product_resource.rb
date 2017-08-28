@@ -1,4 +1,6 @@
 class Api::V1::ProductResource < JSONAPI::Resource
+  default_page_size = 20
+
   attribute :id
   attribute :price
   attribute :categories
