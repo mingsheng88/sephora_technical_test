@@ -1,9 +1,14 @@
 class Api::V1::ProductResource < JSONAPI::Resource
   default_page_size = 20
 
-  attribute :name
-  attribute :price
-  attribute :categories
+  attributes :name, :price, :categories
+  attribute :brand_name
+
+  belongs_to :brand
+
+  def brand_name
+    brand.name
+  end
 
   filter :categories,
     default: '',
