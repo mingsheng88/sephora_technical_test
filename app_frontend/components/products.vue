@@ -1,6 +1,6 @@
 <template>
   <div>
-    <li class='product list-unstyled col-xs-4' v-for='product in products'>
+    <li class='list-unstyled col-xs-4' v-for='product in products'>
       <product :product='product'/>
     </li>
   </div>
@@ -30,8 +30,4 @@
 </script>
 
 <style scoped>
-  .product {
-    cursor: pointer;
-    margin-bottom: 30px;
-  }
 </style>
