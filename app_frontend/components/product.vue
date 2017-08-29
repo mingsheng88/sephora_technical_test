@@ -1,12 +1,9 @@
 <template>
-  <div>
-    <div>
-      <img src='http://via.placeholder.com/225x225'
-        @mouseenter='mouseover_active = true'
-        @mouseleave='mouseover_active = false'>
-      </img>
-      <div class='mouseover' v-if='mouseover_active'>
-      </div>
+  <div @mouseenter='mouseover_active = true' @mouseleave='mouseover_active = false'>
+    <span class='heart' :class='{ hidden: !mouseover_active }'></span>
+    <img src='http://via.placeholder.com/225x225'/>
+    <div class='add_to_cart' :class='{ hidden: !mouseover_active }'>
+      ADD TO CART
     </div>
     <div class='brand_name font-weight-bold text-uppercase'>{{ brand_name }}</div>
     <div class='name'>{{ name }}</div>
@@ -20,9 +17,7 @@
     props: [
       'product'
     ],
-    data() {
-      return { mouseover_active: false }
-    },
+    data() { return { mouseover_active: false } },
     computed: {
       brand_name() { return this.product.attributes['brand-name'] },
       name() { return this.product.attributes.name },
@@ -32,9 +27,21 @@
 </script>
 
 <style scoped>
-  .mouseover {
-    width:100%;
-    background:red;
+  .add_to_cart {
+    background: #d50032;
+    position: relative;
+    bottom: 30px;
+    height: 30px;
+    margin-bottom: -30px;
+    text-align: center;
+    width: 100%;
+    max-width: 225px;
+    font-size: 18px;
+    color: white;
+  }
+  .add_to_cart:hover {
+    background: black;
+    opacity: 0.65;
   }
 
   .brand_name {

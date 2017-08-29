@@ -31,6 +31,7 @@
 
 <style scoped>
   .product {
+    cursor: pointer;
     margin-bottom: 30px;
   }
 </style>
