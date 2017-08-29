@@ -6,16 +6,20 @@
     >
 
     <div class='product-image'>
-      <span class='add_to_wishlist'></span>
       <img src='http://via.placeholder.com/225x225'/>
-      <div class='product_out_of_stock' v-if='is_out_of_stock()'>OUT OF STOCK</div>
+      <span class='add_to_wishlist'></span>
 
-      <div class='add_to_cart image-overlay-btn' :class='{ hidden: !mouseover_active }' v-if='!is_out_of_stock()'>
-        ADD TO CART
-      </div>
-      <div class='add_to_waitlist image-overlay-btn' :class='{ hidden: !mouseover_active }' v-else>
-        WAITLIST ME
-      </div>
+      <template v-if='!is_out_of_stock()'>
+        <div class='add_to_cart image-overlay-btn' :class='{ hidden: !mouseover_active }'>
+          ADD TO CART
+        </div>
+      </template>
+      <template v-else>
+        <div class='add_to_waitlist image-overlay-btn' :class='{ hidden: !mouseover_active }'>
+          WAITLIST ME
+        </div>
+        <div class='product_out_of_stock'>OUT OF STOCK</div>
+      </template>
     </div>
 
     <div class='brand_name font-weight-bold text-uppercase'>{{ brand_name }}</div>
@@ -51,6 +55,10 @@
     width: 100%;
     max-width: 225px;
     margin-bottom: 30px;
+    position: relative;
+  }
+
+  .product-image {
     position: relative;
   }
 
@@ -98,9 +106,10 @@
 
   .add_to_wishlist {
     font-family: 'entypo';
-    font-size: 24px;
+    font-size: 4vmin;
     position: absolute;
     right: 13px;
+    top: 0px;
   }
   .add_to_wishlist:before {
     content: "\2661";
