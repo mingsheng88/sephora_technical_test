@@ -2,6 +2,7 @@
   <div class='product'
     @mouseenter='mouseover_active = true'
     @mouseleave='mouseover_active = false'
+    @click='open_product_page()'
     :class='{ available: !is_out_of_stock(), out_of_stock: is_out_of_stock() }'
     >
 
@@ -37,7 +38,10 @@
     data() { return { mouseover_active: false } },
     methods: {
       is_out_of_stock() { return this.stock_status == 'out_of_stock' },
-      is_on_sale() { return this.sale_status == 'on_sale' }
+      is_on_sale() { return this.sale_status == 'on_sale' },
+      open_product_page() {
+        this.$router.push({ path: `/products/${this.product.id}` })
+      }
     },
     computed: {
       brand_name() { return this.product.attributes['brand-name'] },
