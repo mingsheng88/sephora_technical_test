@@ -1,7 +1,5 @@
 <template>
   <div class='product'
-    @mouseenter='mouseover_active = true'
-    @mouseleave='mouseover_active = false'
     @click='open_product_page()'
     :class='{ available: !is_out_of_stock, out_of_stock: is_out_of_stock }'
     >
@@ -11,12 +9,12 @@
       <span class='add_to_wishlist'></span>
 
       <template v-if='!is_out_of_stock'>
-        <div class='add_to_cart image-overlay-btn' :class='{ hidden: !mouseover_active }'>
+        <div class='add_to_cart image-overlay-btn'>
           ADD TO CART
         </div>
       </template>
       <template v-else>
-        <div class='add_to_waitlist image-overlay-btn' :class='{ hidden: !mouseover_active }'>
+        <div class='add_to_waitlist image-overlay-btn'>
           WAITLIST ME
         </div>
         <div class='product_out_of_stock'>OUT OF STOCK</div>
@@ -35,7 +33,7 @@
     props: [
       'product'
     ],
-    data() { return { mouseover_active: false } },
+    data() { return { } },
     methods: {
       open_product_page() { this.$router.push({ path: `/products/${this.product.id}` }) }
     },
@@ -58,6 +56,11 @@
     max-width: 225px;
     margin-bottom: 30px;
     position: relative;
+    &:hover {
+      .image-overlay-btn {
+        display: block;
+      }
+    }
   }
 
   .product-image {
@@ -76,6 +79,7 @@
   }
 
   .image-overlay-btn {
+    display: none;
     position: relative;
     bottom: 30px;
     line-height: 30px;
