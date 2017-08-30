@@ -17,7 +17,7 @@ Vue.use(VueRouter);
 
 const router = new VueRouter({
   routes: Routes,
-  mode: 'hash'
+  mode: 'history'
 });
 
 document.addEventListener('DOMContentLoaded', () => {
