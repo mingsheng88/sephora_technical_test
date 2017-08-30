@@ -1,5 +1,5 @@
 <template>
-  <div class='container'>
+  <div>
     <div class='row' v-for='i in Math.ceil(products.length / 3)'>
       <li class='list-unstyled col-xs-4' v-for='product in products.slice((i - 1) * 3, i * 3)'>
         <product :product='product'/>

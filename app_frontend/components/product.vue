@@ -3,14 +3,14 @@
     @mouseenter='mouseover_active = true'
     @mouseleave='mouseover_active = false'
     @click='open_product_page()'
-    :class='{ available: !is_out_of_stock(), out_of_stock: is_out_of_stock() }'
+    :class='{ available: !is_out_of_stock, out_of_stock: is_out_of_stock }'
     >
 
     <div class='product-image'>
       <img src='http://via.placeholder.com/225x225'/>
       <span class='add_to_wishlist'></span>
 
-      <template v-if='!is_out_of_stock()'>
+      <template v-if='!is_out_of_stock'>
         <div class='add_to_cart image-overlay-btn' :class='{ hidden: !mouseover_active }'>
           ADD TO CART
         </div>
@@ -37,11 +37,7 @@
     ],
     data() { return { mouseover_active: false } },
     methods: {
-      is_out_of_stock() { return this.stock_status == 'out_of_stock' },
-      is_on_sale() { return this.sale_status == 'on_sale' },
-      open_product_page() {
-        this.$router.push({ path: `/products/${this.product.id}` })
-      }
+      open_product_page() { this.$router.push({ path: `/products/${this.product.id}` }) }
     },
     computed: {
       brand_name() { return this.product.attributes['brand-name'] },
@@ -49,6 +45,8 @@
       price() { return this.product.attributes.price },
       stock_status() { return this.product.attributes['stock-status'] },
       sale_status() { return this.product.attributes['sale-status'] },
+      is_out_of_stock() { return this.stock_status == 'out_of_stock' },
+      is_on_sale() { return this.sale_status == 'on_sale' },
     }
   }
 </script>
@@ -68,7 +66,7 @@
 
   .product_out_of_stock {
     position: absolute;
-    font-size: 2.2vmin;
+    font-size: 2.2vw;
     text-align: center;
     margin-top: -55%;
     line-height: 30px;
@@ -82,7 +80,7 @@
     bottom: 30px;
     line-height: 30px;
     text-align: center;
-    font-size: 2.5vmin;
+    font-size: 2.5vw;
     margin-bottom: -30px;
   }
 
@@ -110,7 +108,7 @@
 
   .add_to_wishlist {
     font-family: 'entypo';
-    font-size: 4vmin;
+    font-size: 2vw;
     position: absolute;
     right: 13px;
     top: 0px;

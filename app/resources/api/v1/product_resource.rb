@@ -1,7 +1,7 @@
 class Api::V1::ProductResource < JSONAPI::Resource
   default_page_size = 20
 
-  attributes :name, :price, :categories, :stock_status, :sale_status
+  attributes :name, :price, :categories, :stock_status, :sale_status, :sale_price, :sale_text
   attribute :brand_name
 
   belongs_to :brand
@@ -12,7 +12,7 @@ class Api::V1::ProductResource < JSONAPI::Resource
 
   filter :categories,
     default: '',
-    apply: ->(records, values, _options) { records.in_categories(values) }
+   apply: ->(records, values, _options) { records.in_categories(values) }
 
   filter :price_from,
     verify: ->(values, _context) { values.map { |value| BigDecimal(value) } },
