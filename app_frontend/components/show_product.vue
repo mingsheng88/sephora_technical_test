@@ -1,13 +1,13 @@
 <template>
   <div class='row'>
     <div class='col-xs-3'>
-      <img src='http://via.placeholder.com/225x225'>
+      <img src='http://via.placeholder.com/225x225'/>
     </div>
     <div class='col-xs-9'>
-      <h1>{{ product.attributes.name }}</h1>
+      <h1>{{ name }}</h1>
       <div class='price'>
         <label>Price</label>
-        <span>{{ product.attributes.price }}</span>
+        <span>{{ price }}</span>
       </div>
       <div class='stock-status'>
         <label>Stock Status</label>
@@ -42,29 +42,30 @@
     data() {
       return {
         id: this.$route.params.id,
-        product: {}
+        product: null
       }
     },
-    methods: {
-      open_product_page() { this.$router.push({ path: `/products/${this.product.id}` }) }
-    },
     computed: {
-      brand_name() { return this.product.attributes['brand-name'] },
-      name() { return this.product.attributes.name },
-      price() { return this.product.attributes.price },
-      stock_status() { return this.product.attributes['stock-status'] },
-      sale_status() { return this.product.attributes['sale-status'] },
-      sale_text() { return this.product.attributes['sale-text'] },
+      brand_name() { return this.product && this.product.attributes['brand-name'] },
+      name() { return this.product && this.product.attributes.name },
+      price() { return this.product && this.product.attributes.price },
+      stock_status() { return this.product && this.product.attributes['stock-status'] },
+      sale_status() { return this.product && this.product.attributes['sale-status'] },
+      sale_text() { return this.product && this.product.attributes['sale-text'] },
       is_out_of_stock() { return this.stock_status == 'out_of_stock' },
       is_on_sale() { return this.sale_status == 'on_sale' },
     },
-    created() {
-      this.$http.
-        get(`http://localhost:3000/api/v1/products/${this.id}`).
-        then(function(response) {
-          this.product = response.data.data
-        });
-    }
+    methods: {
+      fetch_product: function() {
+        console.log("fetching product!")
+        this.$http.
+          get(`http://localhost:3000/api/v1/products/${this.id}`).
+          then(function(response) {
+            this.product = response.data.data
+          });
+      }
+    },
+    created: function() { this.fetch_product(); }
   }
 </script>
 
