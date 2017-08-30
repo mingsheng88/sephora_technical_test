@@ -1,22 +1,26 @@
 <template>
   <div>
-    <div class='row form-group'>
+
+    <!-- Filter Nav -->
+    <div id='filter-bar' class='row mt-3 mb-3' @keyup.enter='fetch_products()'>
       <div class='col-xs-3'>
-        <input type='text' placeholder='Category' v-model='categories' />
+        <b-form-input type='text' placeholder='Category' v-model='categories' />
+      </div>
+      <div class='col-xs-2'>
+        <b-form-input type='text' placeholder='Min Price' v-model='price_from' />
+      </div>
+      <div class='col-xs-2'>
+        <b-form-input type='text' placeholder='Max Price' v-model='price_to' />
       </div>
       <div class='col-xs-3'>
-        <input type='text' placeholder='Min Price' v-model='price_from' />
+        <b-form-select v-model='sort_sequence' :options='sort_sequence_options' />
       </div>
-      <div class='col-xs-3'>
-        <input type='text' placeholder='Max Price' v-model='price_to' />
-      </div>
-      <div class='col-xs-3'>
-        <select>
-          <option>Ascending Price</option>
-          <option>Descending Price</option>
-        </select>
+      <div class='col-xs-2'>
+        <a class='btn btn-primary' @click='fetch_products()'>Submit</a>
       </div>
     </div>
+
+    <!-- Product List -->
     <div class='row' v-for='i in Math.ceil(products.length / products_per_row)'>
       <li
         class="list-unstyled"
@@ -26,6 +30,7 @@
         <product :product='product'/>
       </li>
     </div>
+
   </div>
 </template>
 
@@ -49,16 +54,28 @@
         categories: '',
         price_from: '',
         price_to: '',
-        sort_sequence: '-price',
         page_size: 20,
-        page_number: 1
+        page_number: 1,
+        sort_sequence: '-price',
+        sort_sequence_options: [
+          { value: null, text: 'Sort Sequence' },
+          { value: 'price', text: 'Ascending Price' },
+          { value: '-price', text: 'Descending Price' },
+        ],
+      }
+    },
+    watch: {
+      sort_sequence: function(value) {
+        this.fetch_products();
       }
     },
     computed: {
       product_width() { return Math.floor(12 / this.products_per_row) }
     },
-    created: function() {
-      this.$http.get('http://localhost:3000/api/v1/products', {
+    methods: {
+      fetch_products: function() {
+        console.log("fetching products!")
+        this.$http.get('http://localhost:3000/api/v1/products', {
           params: {
             filter: {
               price_to: this.price_to,
@@ -74,9 +91,13 @@
         }).then(function(response) {
           this.products = response.data.data
         })
-    }
+      }
+    },
+    created: function() { this.fetch_products(); }
   }
 </script>
 
 <style scoped>
+  #filter-bar {
+  }
 </style>
