@@ -15,5 +15,6 @@
     width: 100%;
     padding: 20px;
     text-align: center;
+    border-bottom: 2px solid #f1f1f1;
   }
 </style>
