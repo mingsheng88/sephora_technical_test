@@ -6,20 +6,23 @@
 
     <div class='product-image'>
       <img src='http://via.placeholder.com/225x225'/>
-      <span class='add_to_wishlist'></span>
 
-      <template v-if='!is_out_of_stock'>
+      <template v-if='is_out_of_stock'>
+        <div class='product_out_of_stock'>
+          <span>OUT OF STOCK</span>
+        </div>
+        <div class='add_to_waitlist image-overlay-btn'>
+          WAITLIST ME
+        </div>
+      </template>
+      <template v-else>
         <div class='add_to_cart image-overlay-btn'>
           ADD TO CART
         </div>
       </template>
-      <template v-else>
-        <div class='add_to_waitlist image-overlay-btn'>
-          WAITLIST ME
-        </div>
-        <div class='product_out_of_stock'>OUT OF STOCK</div>
-      </template>
     </div>
+
+    <span class='add_to_wishlist'></span>
 
     <div class='brand_name font-weight-bold text-uppercase'>{{ brand_name }}</div>
     <div class='name'>{{ name }}</div>
@@ -33,7 +36,6 @@
     props: [
       'product'
     ],
-    data() { return { } },
     methods: {
       open_product_page() { this.$router.push({ path: `/products/${this.product.id}` }) }
     },
@@ -69,23 +71,31 @@
 
   .product_out_of_stock {
     position: absolute;
-    font-size: 2.2vw;
-    text-align: center;
-    margin-top: -55%;
-    line-height: 30px;
-    width: 100%;
-    opacity: 0.5;
-    background: white;
+    display: flex;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    justify-content: center;
+
+    span {
+      font-size: 2.2vw;
+      line-height: 30px;
+      text-align: center;
+      opacity: 0.5;
+      background: white;
+    }
   }
 
   .image-overlay-btn {
     display: none;
-    position: relative;
-    bottom: 30px;
+    position: absolute;
+    bottom: 0px;
     line-height: 30px;
     text-align: center;
     font-size: 2.5vw;
-    margin-bottom: -30px;
+    width: 100%;
   }
 
   .add_to_cart {
@@ -114,7 +124,7 @@
     font-family: 'entypo';
     font-size: 2vw;
     position: absolute;
-    right: 13px;
+    right: 5%;
     top: 0px;
   }
   .add_to_wishlist:before {
