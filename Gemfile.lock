@@ -127,6 +127,7 @@ GEM
       pry (~> 0.10)
     puma (3.10.0)
     rack (2.0.3)
+    rack-cors (1.0.1)
     rack-mini-profiler (0.10.5)
       rack (>= 1.2.0)
     rack-test (0.6.3)
@@ -252,6 +253,7 @@ DEPENDENCIES
   pg (~> 0.21)
   pry-byebug
   puma (~> 3.10)
+  rack-cors
   rack-mini-profiler (~> 0.10)
   rack-timeout (~> 0.4)
   rails (~> 5.1.3)
