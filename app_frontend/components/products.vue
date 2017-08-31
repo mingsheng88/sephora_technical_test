@@ -20,6 +20,19 @@
       </div>
     </div>
 
+    <!-- Pagination -->
+    <div class='row d-block'>
+        <b-pagination-nav
+          base-url='#'
+          align= 'center'
+          v-model='currentPage'
+          :number-of-pages='page_count'
+          :per-page='page_size'
+          :link-gen='function() { return "#" }'
+          />
+    </div>
+    <div>{{ currentPage }}</div>
+
     <!-- Product List -->
     <div class='row' v-for='i in Math.ceil(products.length / products_per_row)'>
       <li
@@ -30,7 +43,6 @@
         <product :product='product'/>
       </li>
     </div>
-
   </div>
 </template>
 
@@ -54,20 +66,20 @@
         categories: '',
         price_from: '',
         price_to: '',
-        page_size: 20,
-        page_number: 1,
         sort_sequence: '-price',
         sort_sequence_options: [
           { value: null, text: 'Sort Sequence' },
           { value: 'price', text: 'Ascending Price' },
           { value: '-price', text: 'Descending Price' },
         ],
+        currentPage: 1,
+        page_size: 21,
+        page_count: 1,
       }
     },
     watch: {
-      sort_sequence: function(value) {
-        this.fetch_products();
-      }
+      sort_sequence: function(value) { this.fetch_products(); },
+      currentPage: function() { this.fetch_products(); },
     },
     computed: {
       product_width() { return Math.floor(12 / this.products_per_row) }
@@ -85,11 +97,14 @@
             sort: this.sort_sequence,
             page: {
               size: this.page_size,
-              page_number: this.page_number
+              number: this.currentPage
             }
           }
         }).then(function(response) {
           this.products = response.data.data
+          this.currentPage = parseInt(response.data.meta.page_number)
+          this.page_count = response.data.meta.page_count
+          this.page_size = response.data.meta.page_size
         })
       }
     },
