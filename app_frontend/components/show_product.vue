@@ -46,12 +46,12 @@
       }
     },
     computed: {
-      brand_name() { return this.product && this.product.attributes['brand-name'] },
+      brand_name() { return this.product && this.product.attributes.brand_name },
       name() { return this.product && this.product.attributes.name },
       price() { return this.product && this.product.attributes.price },
-      stock_status() { return this.product && this.product.attributes['stock-status'] },
-      sale_status() { return this.product && this.product.attributes['sale-status'] },
-      sale_text() { return this.product && this.product.attributes['sale-text'] },
+      stock_status() { return this.product && this.product.attributes.stock_status },
+      sale_status() { return this.product && this.product.attributes.sale_status },
+      sale_text() { return this.product && this.product.attributes.sale_text },
       is_out_of_stock() { return this.stock_status == 'out_of_stock' },
       is_on_sale() { return this.sale_status == 'on_sale' },
     },

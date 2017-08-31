@@ -40,11 +40,11 @@
       open_product_page() { this.$router.push({ path: `/products/${this.product.id}` }) }
     },
     computed: {
-      brand_name() { return this.product.attributes['brand-name'] },
+      brand_name() { return this.product.attributes.brand_name },
       name() { return this.product.attributes.name },
       price() { return this.product.attributes.price },
-      stock_status() { return this.product.attributes['stock-status'] },
-      sale_status() { return this.product.attributes['sale-status'] },
+      stock_status() { return this.product.attributes.stock_status },
+      sale_status() { return this.product.attributes.sale_status },
       is_out_of_stock() { return this.stock_status == 'out_of_stock' },
       is_on_sale() { return this.sale_status == 'on_sale' },
     }
