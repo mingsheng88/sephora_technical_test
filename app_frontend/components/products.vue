@@ -23,7 +23,6 @@
     <!-- Pagination -->
     <div class='row d-block'>
         <b-pagination-nav
-          base-url='#'
           align= 'center'
           v-model='currentPage'
           :number-of-pages='page_count'
@@ -31,7 +30,6 @@
           :link-gen='function() { return "#" }'
           />
     </div>
-    <div>{{ currentPage }}</div>
 
     <!-- Product List -->
     <div class='row' v-for='i in Math.ceil(products.length / products_per_row)'>
