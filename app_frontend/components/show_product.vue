@@ -1,5 +1,5 @@
 <template>
-  <div class='row'>
+  <div class='row mt-10'>
     <div class='col-xs-3'>
       <img src='http://via.placeholder.com/225x225'/>
     </div>

@@ -8,9 +8,6 @@ import Routes from './routes'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import 'bootstrap/dist/css/bootstrap.css'
 
-import 'bootstrap/dist/css/bootstrap.css'
-import 'bootstrap-vue/dist/bootstrap-vue.css'
-
 Vue.use(BootstrapVue);
 Vue.use(VueResource);
 Vue.use(VueRouter);
@@ -22,7 +19,6 @@ const router = new VueRouter({
 
 document.addEventListener('DOMContentLoaded', () => {
   document.body.appendChild(document.createElement('root'))
-  // new Vue(Root).$mount('root')
   new Vue({
     el: 'root',
     render: h => h(Root),

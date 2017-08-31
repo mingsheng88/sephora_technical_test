@@ -2,7 +2,7 @@
   <div>
 
     <!-- Filter Nav -->
-    <div id='filter-bar' class='row mt-3 mb-3' @keyup.enter='fetch_products()'>
+    <div class='row mt-3 mb-3' @keyup.enter='fetch_products()'>
       <div class='col-xs-3'>
         <b-form-input type='text' placeholder='Category' v-model='categories' />
       </div>
@@ -87,7 +87,6 @@
     },
     methods: {
       fetch_products: function() {
-        console.log("fetching products!")
         this.$http.get('http://localhost:3000/api/v1/products', {
           params: {
             filter: {
@@ -114,6 +113,4 @@
 </script>
 
 <style scoped>
-  #filter-bar {
-  }
 </style>
