@@ -1,9 +1,5 @@
 <template>
-  <div class='product'
-    @click='open_product_page()'
-    :class='{ available: !is_out_of_stock, out_of_stock: is_out_of_stock }'
-    >
-
+  <div class='product' @click='open_product_page()'>
     <div class='product-image'>
       <img class='w-100' src='http://via.placeholder.com/225x225'/>
 
@@ -15,11 +11,9 @@
           WAITLIST ME
         </div>
       </template>
-      <template v-else>
-        <div class='add_to_cart image-overlay-btn'>
-          ADD TO CART
-        </div>
-      </template>
+      <div class='add_to_cart image-overlay-btn' v-else>
+        ADD TO CART
+      </div>
 
       <span class='add_to_wishlist'></span>
     </div>

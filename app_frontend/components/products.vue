@@ -2,7 +2,7 @@
   <div>
 
     <!-- Filter Nav -->
-    <div class='row mt-3 mb-3' @keyup.enter='fetch_products()'>
+    <div class='row mt-3 mb-3' @keyup.enter='filter_products()'>
       <div class='col-xs-3'>
         <b-form-input type='text' placeholder='Category' v-model='categories' />
       </div>
@@ -16,11 +16,15 @@
         <b-form-select v-model='sort_sequence' :options='sort_sequence_options' />
       </div>
       <div class='col-xs-2 text-right'>
-        <a href='#' class='btn btn-primary' @click.prevent='fetch_products()'>
+        <a href='#' class='btn btn-primary' @click.prevent='filter_products()'>
           Submit
         </a>
       </div>
     </div>
+
+    <b-alert variant='danger' :show='this.has_error_message'>
+      {{ error_message }}
+    </b-alert>
 
     <template v-if='products.length > 0'>
       <!-- Pagination -->
@@ -34,10 +38,6 @@
             :link-gen='function() { return "#" }'
             />
       </div>
-
-      <b-alert variant='danger' :show='this.has_error_message'>
-        {{ error_message }}
-      </b-alert>
 
       <!-- Product List -->
       <!-- FIXME: Simplify / Extract as smaller component -->
@@ -71,6 +71,7 @@
 
 <script>
   import Product from '../components/product.vue'
+  import _ from 'lodash'
 
   export default {
     name: 'products',
@@ -116,7 +117,11 @@
       has_error_message() { return this.error_message.length > 0; },
     },
     methods: {
-      fetch_products: function() {
+      filter_products: function() {
+        this.currentPage = 1
+        this.fetch_products()
+      },
+      fetch_products: _.debounce(function() {
         this.$http.get('http://localhost:3000/api/v1/products', {
           params: {
             filter: {
@@ -132,13 +137,12 @@
           }
         }).then(function(response) {
           this.products = response.data.data
-          this.currentPage = parseInt(response.data.meta.page_number)
           this.page_count = response.data.meta.page_count
           this.page_size = response.data.meta.page_size
         }).catch(function(error) {
           this.error_message = `An '${error.statusText}' has occurred. Please try again shortly.`
         })
-      },
+      }, 200),
     },
     created: function() { this.fetch_products(); }
   }
