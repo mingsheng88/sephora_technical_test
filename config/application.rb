@@ -20,6 +20,7 @@ module SephoraTechnicalTest
     # Autoload
     autoload_paths = %w(
       app/resources
+      app/jsonapi_formatters
       app_frontend
     )
 
