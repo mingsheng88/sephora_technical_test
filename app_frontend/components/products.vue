@@ -22,39 +22,49 @@
       </div>
     </div>
 
-    <!-- Pagination -->
-    <div class='row d-block'>
-        <b-pagination-nav
-          class='col-xs-12'
-          align= 'right'
-          v-model='currentPage'
-          :number-of-pages='page_count'
-          :per-page='page_size'
-          :link-gen='function() { return "#" }'
-          />
-    </div>
+    <template v-if='products.length > 0'>
+      <!-- Pagination -->
+      <div class='row d-block'>
+          <b-pagination-nav
+            class='col-xs-12'
+            align= 'right'
+            v-model='currentPage'
+            :number-of-pages='page_count'
+            :per-page='page_size'
+            :link-gen='function() { return "#" }'
+            />
+      </div>
 
-    <!-- Product List -->
-    <div class='row' v-for='i in Math.ceil(products.length / products_per_row)'>
-      <li
-        class="list-unstyled d-flex justify-content-center"
-        :class='`col-xs-${product_width}`'
-        v-for='product in products.slice((i - 1) * products_per_row, i * products_per_row)'
-        >
-        <product :product='product'/>
-      </li>
-    </div>
+      <b-alert variant='danger' :show='this.has_error_message'>
+        {{ error_message }}
+      </b-alert>
 
-    <!-- Pagination -->
-    <div class='row d-block'>
-        <b-pagination-nav
-          class='col-xs-12'
-          align= 'right'
-          v-model='currentPage'
-          :number-of-pages='page_count'
-          :per-page='page_size'
-          :link-gen='function() { return "#" }'
-          />
+      <!-- Product List -->
+      <!-- FIXME: Simplify / Extract as smaller component -->
+      <div class='row' v-for='i in Math.ceil(products.length / products_per_row)'>
+        <li
+          class="list-unstyled d-flex justify-content-center"
+          :class='`col-xs-${product_width}`'
+          v-for='product in products.slice((i - 1) * products_per_row, i * products_per_row)'
+          >
+          <product :product='product'/>
+        </li>
+      </div>
+
+      <!-- Pagination -->
+      <div class='row d-block'>
+          <b-pagination-nav
+            class='col-xs-12'
+            align= 'right'
+            v-model='currentPage'
+            :number-of-pages='page_count'
+            :per-page='page_size'
+            :link-gen='function() { return "#" }'
+            />
+      </div>
+    </template>
+    <div class='d-flex w-100 h-20 justify-content-center' v-else>
+      No products found
     </div>
   </div>
 </template>
@@ -88,14 +98,22 @@
         currentPage: 1,
         page_size: 21,
         page_count: 1,
+        error_message: '',
       }
     },
     watch: {
       sort_sequence: function(value) { this.fetch_products(); },
-      currentPage: function() { this.fetch_products(); },
+      currentPage: function() {
+        if (this.currentPage && this.currentPage > 0) {
+          this.fetch_products();
+        } else {
+          this.currentPage = 1
+        }
+      },
     },
     computed: {
-      product_width() { return Math.floor(12 / this.products_per_row) }
+      product_width() { return Math.floor(12 / this.products_per_row) },
+      has_error_message() { return this.error_message.length > 0; },
     },
     methods: {
       fetch_products: function() {
@@ -117,8 +135,10 @@
           this.currentPage = parseInt(response.data.meta.page_number)
           this.page_count = response.data.meta.page_count
           this.page_size = response.data.meta.page_size
+        }).catch(function(error) {
+          this.error_message = `An '${error.statusText}' has occurred. Please try again shortly.`
         })
-      }
+      },
     },
     created: function() { this.fetch_products(); }
   }

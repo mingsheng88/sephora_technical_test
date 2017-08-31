@@ -57,7 +57,6 @@
     },
     methods: {
       fetch_product: function() {
-        console.log("fetching product!")
         this.$http.
           get(`http://localhost:3000/api/v1/products/${this.id}`).
           then(function(response) {
