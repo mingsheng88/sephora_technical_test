@@ -1,5 +1,5 @@
 class Api::V1::ProductResource < JSONAPI::Resource
-  default_page_size = 20
+  DEFAULT_PAGE_SIZE = default_page_size = 20
 
   attributes :name, :price, :categories, :stock_status, :sale_status, :sale_price, :sale_text
   attribute :brand_name

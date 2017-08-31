@@ -117,6 +117,17 @@ describe Api::V1::ProductsController, type: :controller do
         expect(json.dig(:data).size).to eq(1)
         expect(json.dig(:data, 0, :id)).to eq(product_three.id.to_s)
       end
+
+      it 'passes page_number, page_size and total_page_count in meta field' do
+        product_one = create(:product, price: 15)
+        product_two = create(:product, price: 12)
+        product_three = create(:product, price: 18)
+        get :index, params: { page: { number: 2, size: 1 } }
+        expect(json.dig(:data).size).to eq(1)
+        expect(json.dig(:meta, :page_number).to_i).to eq(2)
+        expect(json.dig(:meta, :page_size).to_i).to eq(1)
+        expect(json.dig(:meta, :page_count).to_i).to eq(3)
+      end
     end
   end
 
