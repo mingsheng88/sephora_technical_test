@@ -16,7 +16,7 @@
         <b-form-select v-model='sort_sequence' :options='sort_sequence_options' />
       </div>
       <div class='col-xs-2 text-right'>
-        <a class='btn btn-primary' @click='fetch_products()'>
+        <a href='#' class='btn btn-primary' @click.prevent='fetch_products()'>
           Submit
         </a>
       </div>
@@ -43,6 +43,18 @@
         >
         <product :product='product'/>
       </li>
+    </div>
+
+    <!-- Pagination -->
+    <div class='row d-block'>
+        <b-pagination-nav
+          class='col-xs-12'
+          align= 'right'
+          v-model='currentPage'
+          :number-of-pages='page_count'
+          :per-page='page_size'
+          :link-gen='function() { return "#" }'
+          />
     </div>
   </div>
 </template>
