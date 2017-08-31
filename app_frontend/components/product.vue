@@ -20,9 +20,9 @@
           ADD TO CART
         </div>
       </template>
-    </div>
 
-    <span class='add_to_wishlist'></span>
+      <span class='add_to_wishlist'></span>
+    </div>
 
     <div class='brand_name font-weight-bold text-uppercase'>{{ brand_name }}</div>
     <div class='name'>{{ name }}</div>
@@ -92,10 +92,18 @@
     display: none;
     position: absolute;
     bottom: 0px;
+    left: 0px;
+    right: 0px;
     line-height: 30px;
     text-align: center;
-    font-size: 2.5vw;
-    width: 100%;
+
+    @media (min-width: 1024px) {
+      font-weight: bold;
+    }
+    @media (max-width: 1024px) {
+      display: none !important;
+      font-size: 2.5vw;
+    }
   }
 
   .add_to_cart {
@@ -122,10 +130,17 @@
 
   .add_to_wishlist {
     font-family: 'entypo';
-    font-size: 2vw;
     position: absolute;
     right: 5%;
-    top: 0px;
+
+    @media (min-width: 1024px) {
+      top: 0px;
+      font-size: 24px;
+    }
+    @media (max-width: 1024px) {
+      bottom: 0px;
+      font-size: 2vw;
+    }
   }
   .add_to_wishlist:before {
     content: "\2661";
@@ -133,14 +148,5 @@
   .add_to_wishlist:hover:before {
     content: "\2665";
     color: red;
-  }
-
-  .brand_name {
-    font-size: 13px;
-    margin-top: 2px;
-  }
-
-  .name {
-    font-family: "Avalon", CenturyGothic, Helvetica, Arial;
   }
 </style>

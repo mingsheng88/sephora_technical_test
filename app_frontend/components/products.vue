@@ -15,15 +15,18 @@
       <div class='col-xs-3'>
         <b-form-select v-model='sort_sequence' :options='sort_sequence_options' />
       </div>
-      <div class='col-xs-2'>
-        <a class='btn btn-primary' @click='fetch_products()'>Submit</a>
+      <div class='col-xs-2 text-right'>
+        <a class='btn btn-primary' @click='fetch_products()'>
+          Submit
+        </a>
       </div>
     </div>
 
     <!-- Pagination -->
     <div class='row d-block'>
         <b-pagination-nav
-          align= 'center'
+          class='col-xs-12'
+          align= 'right'
           v-model='currentPage'
           :number-of-pages='page_count'
           :per-page='page_size'
@@ -34,7 +37,7 @@
     <!-- Product List -->
     <div class='row' v-for='i in Math.ceil(products.length / products_per_row)'>
       <li
-        class="list-unstyled"
+        class="list-unstyled d-flex justify-content-center"
         :class='`col-xs-${product_width}`'
         v-for='product in products.slice((i - 1) * products_per_row, i * products_per_row)'
         >

@@ -1,6 +1,8 @@
 <template>
   <nav>
-    <router-link class='btn btn-default' to='/'>Home</router-link>
+    <div>
+      <router-link class='btn btn-default' to='/'>Home</router-link>
+    </div>
   </nav>
 </template>
 

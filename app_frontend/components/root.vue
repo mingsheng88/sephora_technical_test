@@ -1,9 +1,7 @@
 <template>
   <div class='container'>
-    <div class='container'>
-      <app-header></app-header>
-      <router-view></router-view>
-    </div>
+    <app-header></app-header>
+    <router-view></router-view>
   </div>
 </template>
 
@@ -21,8 +19,4 @@
 </script>
 
 <style scoped>
-  * {
-    font-family: Ubuntu, Arial, sans-serif;
-    letter-spacing: 0.02em;
-  }
 </style>
