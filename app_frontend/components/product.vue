@@ -5,7 +5,7 @@
     >
 
     <div class='product-image'>
-      <img src='http://via.placeholder.com/225x225'/>
+      <img class='w-100' src='http://via.placeholder.com/225x225'/>
 
       <template v-if='is_out_of_stock'>
         <div class='product_out_of_stock'>
@@ -139,7 +139,7 @@
     }
     @media (max-width: 1024px) {
       bottom: 0px;
-      font-size: 2vw;
+      font-size: 3vw;
     }
   }
   .add_to_wishlist:before {
