@@ -10,5 +10,5 @@
 
 FactoryGirl.create_list(:category, 20)
 15.times do
-  FactoryGirl.create_list(:product, rand(0..10), :named)
+  FactoryGirl.create_list(:product, rand(0..10), :named, categories: Category.all.sample(2))
 end
