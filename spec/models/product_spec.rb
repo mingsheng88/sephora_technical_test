@@ -2,47 +2,43 @@ describe Product, type: :model do
   context 'scopes' do
     describe 'in_category' do
       it 'finds products given 1 category' do
-        product = create(:product, categories: ['cat_one', 'cat_two'])
+        cat_one, cat_two = create_list(:category, 2)
+        product = create(:product, categories: [cat_one, cat_two])
         uncategorized_product = create(:product, categories: [])
 
-        expect(described_class.in_category('cat_one')).to include(product)
-        expect(described_class.in_category('cat_one')).not_to include(uncategorized_product)
+        in_cat_one = described_class.in_category(cat_one.name)
+        in_cat_two = described_class.in_category(cat_two.name)
+        no_cat_given = described_class.in_category('non-existent')
 
-        expect(described_class.in_category('cat_two')).to include(product)
-        expect(described_class.in_category('cat_two')).not_to include(uncategorized_product)
+        expect(in_cat_one).to include(product)
+        expect(in_cat_one).not_to include(uncategorized_product)
 
-        expect(described_class.in_category('not_found')).not_to include(product)
-        expect(described_class.in_category('not_found')).not_to include(uncategorized_product)
+        expect(in_cat_two).to include(product)
+        expect(in_cat_two).not_to include(uncategorized_product)
+
+        expect(no_cat_given).not_to include(product)
+        expect(no_cat_given).not_to include(uncategorized_product)
       end
 
       it 'finds products given >1 categories' do
-        product = create(:product, categories: ['cat_one', 'cat_two'])
-        product_two = create(:product, categories: ['cat_one', 'cat_three'])
-        product_three = create(:product, categories: ['cat_one', 'cat_two', 'cat_three'])
+        cat_one, cat_two, cat_three = create_list(:category, 3)
+        product = create(:product, categories: [cat_one])
+        product_two = create(:product, categories: [cat_one])
+        product_three = create(:product, categories: [cat_two])
 
-        search_result = described_class.in_category(['cat_one', 'cat_three'])
+        search_result = described_class.in_category(cat_two.name, cat_three.name)
 
         expect(search_result).not_to include(product)
-        expect(search_result).to include(product_two)
+        expect(search_result).not_to include(product_two)
         expect(search_result).to include(product_three)
       end
 
       it 'finds all given empty string' do
-        product = create(:product, categories: ['cat_one', 'cat_two'])
-        uncategorized_product = create(:product, categories: [])
+        product = create(:product, :with_categories)
+        uncategorized_product = create(:product)
 
         expect(described_class.in_category('')).to include(product)
         expect(described_class.in_category('')).to include(uncategorized_product)
-      end
-
-      it 'is not sequence sensitive' do
-        product = create(:product, categories: ['cat_one', 'cat_two'])
-        product_two = create(:product, categories: ['cat_two', 'cat_one'])
-
-        search_result = described_class.in_category(['cat_one', 'cat_two'])
-
-        expect(search_result).to include(product)
-        expect(search_result).to include(product_two)
       end
     end
 
@@ -99,6 +95,11 @@ describe Product, type: :model do
 
         expect(search_result).to include(product, product_two, product_three)
       end
+    end
+
+    describe 'expanding categories assocation' do
+      # TODO:
+      # When adding / removing categories, we have to expand the considerations
     end
   end
 end

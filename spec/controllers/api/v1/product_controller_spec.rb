@@ -1,51 +1,57 @@
 describe Api::V1::ProductsController, type: :controller do
   describe 'GET api/v1/products' do
     it 'returns all products' do
-      product, product_two = create_list(:product, 2)
+      product, product_two = create_list(:product, 2, :with_category)
       get :index
       expect(json.dig(:data, 0, :id)).to eq(product.id.to_s)
       expect(json.dig(:data, 1, :id)).to eq(product_two.id.to_s)
     end
 
     it 'integrates all filtering, sorting, and paginating' do
-      uncategorized_product = create(:product, categories: ['cat', 'NON_EXISTENT'], price: 12)
-      overpriced_product = create(:product, categories: ['cat', 'cat_two'], price: 15)
+      cat_one = create(:category, name: 'one')
+      cat_two = create(:category, name: 'two')
 
-      expected_product_one = create(:product, categories: ['cat', 'cat_two'], price: 10)
-      expected_product_two = create(:product, categories: ['cat', 'cat_two'], price: 11)
-      expected_product_three = create(:product, categories: ['cat', 'cat_two'], price: 12)
+      uncategorized_product = create(:product, price: 12)
+      overpriced_product = create(:product, categories: [cat_one, cat_two], price: 15)
+
+      expected_product_one = create(:product, categories: [cat_one, cat_two], price: 10)
+      expected_product_two = create(:product, categories: [cat_one, cat_two], price: 11)
+      expected_product_three = create(:product, categories: [cat_one, cat_two], price: 12)
 
       get :index, params: {
-        filter: { categories: 'cat,cat_two', price_from: 10, price_to: 12 },
+        filter: { category_names: ['one','two'], price_from: 10, price_to: 12 },
         sort: '-price',
         page: { number: 3, size: 1 }
       }
 
       expect(json.dig(:data).size).to eq(1)
       expect(json.dig(:data, 0, :id)).to eq(expected_product_one.id.to_s)
+      expect(json.dig(:meta, :page_count)).to eq(3)
     end
 
     context 'filtering' do
       context 'categories' do
         it 'filters by categories' do
-          product_one = create(:product, categories: ['cat', 'cat_one'])
-          product_two = create(:product, categories: ['cat', 'cat_two'])
-          get :index, params: { filter: { categories: 'cat_one' } }
+          expected_category = create(:category, name: 'Expected Category' )
+          product_one = create(:product, categories: [expected_category])
+          product_two = create(:product, :with_category)
+          get :index, params: { filter: { category_names: 'Expected' } }
           expect(json.dig(:data).size).to eq(1)
           expect(json.dig(:data, 0, :id)).to eq(product_one.id.to_s)
         end
 
         it 'filters by categories' do
-          product_one = create(:product, categories: ['cat', 'cat_one'])
-          product_two = create(:product, categories: ['cat', 'cat_two'])
-          get :index, params: { filter: { categories: 'cat' } }
+          expected_category = create(:category, name: 'Expected Category' )
+          create(:product, categories: [expected_category])
+          create(:product, categories: [expected_category])
+          get :index, params: { filter: { category_names: 'Expected' } }
           expect(json.dig(:data).size).to eq(2)
         end
 
         it 'filters by categories' do
-          product_one = create(:product, categories: ['cat', 'cat_one'])
-          product_two = create(:product, categories: ['cat', 'cat_two'])
-          get :index, params: { filter: { categories: 'NON_EXISTENT' } }
+          product_one = create(:product, :with_category)
+          product_two = create(:product, :with_category)
+          get :index, params: { filter: { category_names: 'NON_EXISTENT' } }
           expect(json.dig(:data).size).to eq(0)
         end
       end

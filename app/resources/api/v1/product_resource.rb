@@ -1,19 +1,24 @@
 class Api::V1::ProductResource < JSONAPI::Resource
   DEFAULT_PAGE_SIZE = default_page_size = 20
 
-  attributes :name, :categories, :stock_status, :sale_status, :sale_text
+  attributes :name, :stock_status, :sale_status, :sale_text
   attributes :price, :sale_price, format: :money
-  attribute :brand_name
+  attributes :brand_name, :category_names
 
-  belongs_to :brand
+  has_one :brand
+  has_many :categories
 
   def brand_name
     brand.name
   end
 
-  filter :categories,
+  def category_names
+    categories.map(&:name)
+  end
+
+  filter :category_names,
     default: '',
-   apply: ->(records, values, _options) { records.in_categories(values) }
+    apply: ->(records, values, _options) { records.in_categories(values) }
 
   filter :price_from,
     verify: ->(values, _context) { values.map { |value| BigDecimal(value) } },
