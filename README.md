@@ -1,24 +1,17 @@
-# README
+# backend
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Sephora backend rails project
 
-Things you may want to cover:
+## Stack
 
-* Ruby version
+1. Rails 5.1.2
+2. Ruby 2.4
+3. Vue.js frontend ([Link to frontend project](https://github.com/mingsheng88/sephora_front_end))
 
-* System dependencies
+## Build Setup
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+``` bash
+gem install bundler
+bundle install
+rake db:create db:migrate db:seed
+```
