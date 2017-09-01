@@ -18,6 +18,7 @@ class Api::V1::ProductResource < JSONAPI::Resource
 
   filter :category_names,
     default: '',
+    verify: ->(values, _context) { values },
     apply: ->(records, values, _options) { records.in_categories(values) }
 
   filter :price_from,

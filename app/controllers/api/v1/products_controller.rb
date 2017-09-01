@@ -13,7 +13,7 @@ module Api::V1
     private
 
     def add_includes_to_params
-      params[:include] = 'brand' if params[:include].nil?
+      params[:include] = 'brand,categories' if params[:include].nil?
     end
 
     def base_meta
