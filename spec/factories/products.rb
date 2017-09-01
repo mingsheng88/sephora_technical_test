@@ -4,7 +4,7 @@ FactoryGirl.define do
     sale_price { rand(0.0..100.0)}
     brand
 
-    ignore do
+    transient do
       num_categories 0
     end
 
@@ -13,6 +13,10 @@ FactoryGirl.define do
     end
     trait :with_categories do
       num_categories 2
+    end
+
+    trait :named do
+      name { FFaker::Product.product }
     end
 
     after(:create) do |product, evaluator|
