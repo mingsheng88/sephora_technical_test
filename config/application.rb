@@ -16,6 +16,7 @@ module SephoraTechnicalTest
 
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
+    config.api_only = true
 
     # Autoload
     autoload_paths = %w(
@@ -27,15 +28,5 @@ module SephoraTechnicalTest
     autoload_paths.each do |autoload_path|
       config.autoload_paths << Rails.root.join(autoload_path)
     end
-  end
-end
-
-# Show in-line form errors.
-ActionView::Base.field_error_proc = proc do |html_tag, instance|
-  if html_tag =~ /\<label/
-    html_tag
-  else
-    errors = Array(instance.error_message).join(',')
-    %(#{html_tag}<p class="validation-error"> #{errors}</p>).html_safe
   end
 end
