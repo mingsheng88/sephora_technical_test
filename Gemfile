@@ -9,6 +9,7 @@ end
 # gem 'redis-rails', '~> 5.0' # Use Redis Rails to set up a Redis backed Cache and / or Session
 # gem 'sidekiq', '~> 5.0' # Use Sidekiq as a background job processor through Active Job
 gem 'awesome_print' # Make console more user friendly
+gem 'acts_as_tree', '~> 2.6' # Tree structure
 gem 'bootstrap-sass', '~> 3.3' # Use Bootstrap SASS for Bootstrap support
 gem 'font-awesome-rails', '~> 4.7' # Use Font Awesome Rails for Font Awesome icons
 gem 'jbuilder', '~> 2.5' # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
