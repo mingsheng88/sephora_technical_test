@@ -97,9 +97,17 @@ describe Product, type: :model do
       end
     end
 
+    # TODO:
+    # Quite a few more cases to consider, i.e. deletion
     describe 'expanding categories assocation' do
-      # TODO:
-      # When adding / removing categories, we have to expand the considerations
+      it 'breaks down associations' do
+        one = create(:category)
+        two = create(:category, parent: one)
+        three = create(:category, parent: two)
+        product = create(:product)
+        product.categories << three
+        expect(product.categories.size).to eq(3)
+      end
     end
   end
 end

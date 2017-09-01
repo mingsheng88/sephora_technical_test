@@ -3,7 +3,7 @@ class Product < ApplicationRecord
   monetize :sale_price_cents, numericality: { greater_than_or_equal_to: 0 }
 
   belongs_to :brand
-  has_and_belongs_to_many :categories
+  has_and_belongs_to_many :categories, after_add: :expand_categories_tree
 
   enum stock_status: {
     in_stock: 0,
@@ -34,8 +34,11 @@ class Product < ApplicationRecord
     query
   }
 
-  before_save :expand_categories_tree
-
-  def expand_categories_tree
+  # TODO: Resolve N+1
+  def expand_categories_tree(added_category)
+    ancestors = added_category.ancestors
+    ancestors.reverse_each do |ancestor|
+      categories << ancestor unless categories.include?(ancestor)
+    end
   end
 end
