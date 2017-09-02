@@ -8,6 +8,10 @@ class Api::V1::ProductResource < JSONAPI::Resource
   has_one :brand
   has_many :categories
 
+  def self.records(options = {})
+    Product.includes(:brand, :categories)
+  end
+
   def brand_name
     brand.name
   end
