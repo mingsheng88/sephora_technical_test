@@ -1,7 +1,6 @@
 FactoryGirl.define do
   factory :product do
     price { rand(0.0..100.0) }
-    sale_price { rand(0.0..100.0)}
     brand
 
     transient do
@@ -17,6 +16,15 @@ FactoryGirl.define do
 
     trait :named do
       name { FFaker::Product.product }
+    end
+
+    trait :out_of_stock do
+      stock_status { Product::stock_statuses[:out_of_stock] }
+    end
+
+    trait :on_sale do
+      sale_status { Product::sale_statuses[:on_sale] }
+      sale_price { rand(0.0..100.0)}
     end
 
     after(:create) do |product, evaluator|

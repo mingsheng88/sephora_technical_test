@@ -9,6 +9,12 @@
 # Character.create(name: 'Luke', movie: movies.first)
 
 FactoryGirl.create_list(:category, 20)
-15.times do
+10.times do
   FactoryGirl.create_list(:product, rand(0..10), :named, categories: Category.all.sample(2))
+end
+5.times do
+  FactoryGirl.create_list(:product, rand(0..10), :named, :out_of_stock, categories: Category.all.sample(2))
+end
+5.times do
+  FactoryGirl.create_list(:product, rand(0..10), :named, :on_sale, categories: Category.all.sample(2))
 end

@@ -75,9 +75,37 @@ describe Product, type: :model do
         expect(search_result).to include(product_two, product_three)
       end
 
+      it 'finds all products given from taking into consideration sale_price' do
+        product = create(:product, price: 1)
+        product_two = create(:product,
+                             price: 5,
+                             sale_status: described_class::sale_statuses[:on_sale],
+                             sale_price: 2)
+        product_three = create(:product, price: 3)
+
+        search_result = described_class.price_range(from: 2)
+
+        expect(search_result).not_to include(product)
+        expect(search_result).to include(product_two, product_three)
+      end
+
       it 'finds all products given to' do
         product = create(:product, price: 1)
         product_two = create(:product, price: 2)
+        product_three = create(:product, price: 3)
+
+        search_result = described_class.price_range(to: 2)
+
+        expect(search_result).to include(product, product_two)
+        expect(search_result).not_to include(product_three)
+      end
+
+      it 'finds all products given to taking into consideration sale_price' do
+        product = create(:product, price: 1)
+        product_two = create(:product,
+                             price: 4,
+                             sale_status: described_class::sale_statuses[:on_sale],
+                             sale_price: 2)
         product_three = create(:product, price: 3)
 
         search_result = described_class.price_range(to: 2)

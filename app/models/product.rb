@@ -29,8 +29,24 @@ class Product < ApplicationRecord
   scope :in_categories, ->(*category_names) { in_category(*category_names) }
   scope :price_range, ->(from: nil, to: nil) {
     query = all
-    query = query.where('products.price_cents >= ?', from * 100) if from
-    query = query.where('products.price_cents <= ?', to * 100) if to
+    if from
+      query = query.
+        where(
+          "(products.sale_status = ? AND products.price_cents >= ?)" \
+          " or " \
+          "(products.sale_status = ? AND products.sale_price_cents >= ?)",
+          sale_statuses[:not_on_sale], from * 100,
+          sale_statuses[:on_sale], from * 100)
+    end
+    if to
+      query = query.
+        where(
+          "(products.sale_status = ? AND products.price_cents <= ?)" \
+          " or " \
+          "(products.sale_status = ? AND products.sale_price_cents <= ?)",
+          sale_statuses[:not_on_sale], to * 100,
+          sale_statuses[:on_sale], to * 100)
+    end
     query
   }
 
