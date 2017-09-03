@@ -97,8 +97,7 @@ describe Product, type: :model do
       end
     end
 
-    # TODO:
-    # Quite a few more cases to consider, i.e. deletion
+    # TODO: Quite a few more cases to consider, i.e. deletion
     describe 'expanding categories assocation' do
       it 'breaks down associations' do
         one = create(:category)
