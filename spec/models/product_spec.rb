@@ -125,15 +125,41 @@ describe Product, type: :model do
       end
     end
 
-    # TODO: Quite a few more cases to consider, i.e. deletion
     describe 'expanding categories assocation' do
       it 'breaks down associations' do
         one = create(:category)
         two = create(:category, parent: one)
         three = create(:category, parent: two)
         product = create(:product)
+
         product.categories << three
+
         expect(product.categories.size).to eq(3)
+      end
+
+      it 'will delete all categories associated if they are unused' do
+        one = create(:category)
+        two = create(:category, parent: one)
+        three = create(:category, parent: two)
+        product = create(:product, categories: [one, two, three])
+
+        product.categories.destroy(three)
+
+        expect(product.categories.size).to eq(0)
+      end
+
+
+      it 'will not delete the categories which is still being used' do
+        one = create(:category)
+        two = create(:category, parent: one)
+        three = create(:category, parent: two)
+        four = create(:category, parent: two)
+        product = create(:product, categories: [one, two, three, four])
+
+        product.categories.destroy(four)
+
+        expect(product.categories.size).to eq(3)
+        expect(product.categories).not_to include(four)
       end
     end
   end

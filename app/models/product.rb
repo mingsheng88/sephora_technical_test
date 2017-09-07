@@ -3,7 +3,9 @@ class Product < ApplicationRecord
   monetize :sale_price_cents, numericality: { greater_than_or_equal_to: 0 }
 
   belongs_to :brand
-  has_and_belongs_to_many :categories, after_add: :expand_categories_tree
+  has_and_belongs_to_many :categories,
+    after_add: :expand_categories_tree,
+    after_remove: :delete_unused_categories
 
   enum stock_status: {
     in_stock: 0,
@@ -50,11 +52,16 @@ class Product < ApplicationRecord
     query
   }
 
-  # TODO: Resolve N+1
   def expand_categories_tree(added_category)
-    ancestors = added_category.ancestors
-    ancestors.reverse_each do |ancestor|
-      categories << ancestor unless categories.include?(ancestor)
+    return unless persisted?
+    ancestor_ids = added_category.ancestor_ids
+    categories << Category.where(id: ancestor_ids - categories.pluck(:id))
+  end
+
+  def delete_unused_categories(removed_category)
+    removed_category.ancestors.reverse.each do |ancestor|
+      return if (categories & ancestor.children).any?
+      categories.destroy(ancestor)
     end
   end
 end
